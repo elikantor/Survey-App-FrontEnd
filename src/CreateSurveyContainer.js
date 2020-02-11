@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useReducer } from 'react'
 import Question from './Question'
 
 class CreateSurveyContainer extends React.Component {
   
     state = {
+        name: "",
         questions: [],
         text: ""
     }
@@ -21,18 +22,35 @@ class CreateSurveyContainer extends React.Component {
 
     handleChange = event => {
       this.setState({
-        text: event.target.value
+        [event.target.name]: event.target.value
       })
     }
 
+    createSurvey = () => { 
+      fetch("localhost", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+          creator: user.id
+          name: this.state.name
+          questions: this.state.questions
+        })
+      })
+    }
   render(){
     let questions = this.state.questions.map(q=> <Question question={q}/>)
     console.log(this.state.questions)
     return (
       <form onSubmit={this.handleSubmit} >
-        <input type="text" name="question" value={this.state.text} onChange={this.handleChange}/>
-        <button onClick={this.addQuestion}>Add a Question</button>
+        Name Your Survey! <input type="text" name="name" value={this.state.name} onChange={this.handleChange}/>
+        <br></br>
+        <input type="text" name="text" value={this.state.text} onChange={this.handleChange}/>
+        <button onClick={this.addQuestion}>Save Question</button>
         {questions}
+        <br></br>
+        <button onClick={this.createSurvey}>Create Survey</button>
       </form>
     )
   }
