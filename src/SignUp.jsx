@@ -4,7 +4,9 @@ class SignUp extends React.Component {
 
     state = {
         username: "",
-        password: ""
+        password: "",
+        token: "",
+        survey_creator: ""
     }
 
     handleChange = event => {
@@ -19,11 +21,20 @@ class SignUp extends React.Component {
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({
-                username: this.state.username,
-                password: this.state.password
-            })
+            body: JSON.stringify(
+                this.state
+            )
         })
+        .then(r=>r.json())
+        .then(console.log)
+            // data => {
+            // if (!data.error) {
+            //     localStorage.setItem("token", data.token)
+            //     this.setState({
+            //         survey_creator: data.sur
+            //     })
+            // }
+        // })
     }
 
   render(){
