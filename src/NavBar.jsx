@@ -6,7 +6,7 @@ const NavBar = (props) => {
 
     return (
 <Menu>
-          <NavLink to="/">Home</NavLink>
+          <Menu.Item> <NavLink to="/">Home</NavLink> </Menu.Item> 
         {!props.token ? <Menu.Item>
           <NavLink to="/login">Login</NavLink>
         </Menu.Item> : null }
