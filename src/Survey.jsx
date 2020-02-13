@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Survey = ({survey}) => {
+const Survey = (props) => {
   return(
-    <li>{survey.name}</li>
+    <li onClick={()=> props.fetchsurvey(props.survey)}>{props.survey.name}</li>
   )
 };
 

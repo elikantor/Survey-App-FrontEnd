@@ -2,22 +2,24 @@ import React from 'react';
 import {NavLink} from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
 
-const NavBar = () => {
+const NavBar = (props) => {
 
     return (
-      <Menu>
-        {/* <ul className="nav"> */}
-         <Menu.Item> <NavLink to="/">Home</NavLink>  </Menu.Item> 
-       
-         <Menu.Item> <NavLink to="/login">Login</NavLink>  </Menu.Item>
-        
-         <Menu.Item>   <NavLink to="/signup">Sign Up</NavLink> </Menu.Item> 
-       
-        {/* <li>
+<Menu>
+          <NavLink to="/">Home</NavLink>
+        {!props.token ? <Menu.Item>
+          <NavLink to="/login">Login</NavLink>
+        </Menu.Item> : null }
+        {!props.token ? <Menu.Item>
+          <NavLink to="/signup">Sign Up</NavLink>
+        </Menu.Item> : null }
+        {props.token ? <Menu.Item>
           <NavLink to="/profile">Profile</NavLink>
-        </li> */}
-      {/* </ul> */}
-      </Menu>
+        </Menu.Item> : null }
+        {props.token ? <Menu.Item>
+          <button onClick={props.signout}>Sign Out</button>
+        </Menu.Item> : null }
+        </Menu>
     )
 
 }

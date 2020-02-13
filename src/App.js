@@ -44,9 +44,16 @@ class App extends React.Component {
     }
   }
 
+  renderSurvey = (survey) => {
+    // fetch(`http://localhost:3000/login/${survey.id}`)
+    //   .then(r=>r.json())
+    //   .then(data=> {
+
+    //   })
+  }
+
 
   login = (userinfo) => {
-
     fetch("http://localhost:3000/login", {
         method: 'POST', 
         headers: { 
@@ -70,24 +77,36 @@ class App extends React.Component {
   }
 
   signup = (userinfo) => {
+    console.log(userinfo)
     fetch("http://localhost:3000/survey_creators", {
         method: "POST",
         headers: {
             "Content-type": "application/json"
         },
         body: JSON.stringify(
-            {userinfo}
+            userinfo
         )
     })
     .then(r=>r.json())
     .then(data => {
+      console.log(data)
         if (!data.error) {
             localStorage.setItem("token", data.token)
             this.setState({
                 survey_creator: data.survey_creator,
                 token: data.token
+            }, () => {
+              this.props.history.push("/profile")
             })
         }
+    })
+  }
+
+  signout = () => {
+    localStorage.clear("token")
+    this.props.history.push("/")
+    this.setState({
+      token: ""
     })
   }
 
@@ -98,12 +117,13 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
-        <NavBar />
+        <NavBar token={this.state.token} signout={this.signout}/>
         <Switch>
           <Route path="/login" exact render={()=> <LogIn login={this.login}/> } />
           <Route path="/signup" exact render={()=> <SignUp signup={this.signup}/>} />
-          <Route path="/profile" render={ ()=> <ProfilePage survey_creator={this.state.survey_creator}/> } />
+          <Route path="/profile" render={ ()=> <ProfilePage renderSurvey={this.renderSurvey} survey_creator={this.state.survey_creator}/> } />
           <Route path="/" exact render={() => <Home /> } />
+          <Route path="/survey" render={this.renderSurvey} />
           <Route render={ () => <p>Page not Found</p> } />
         </Switch>
       </div>

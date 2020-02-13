@@ -6,7 +6,7 @@ import { Card, Image } from 'semantic-ui-react'
 class ProfilePage extends Component {
 
   render() {
-      console.log(this.props)
+    console.log(this.props)
     let {survey_creator:{surveys, username}} = this.props
 
     return (
@@ -22,7 +22,7 @@ class ProfilePage extends Component {
           {username} is a blogger living in NYC.
         </Card.Description>
       </Card.Content>
-      {surveys.map(survey => <Survey key={survey.id} survey={survey} />)}
+      {surveys.map(survey => <li onClick={()=>this.props.renderSurvey(survey)} key={survey.id}>{survey.name}</li>)}
     </Card>
     )
     }
