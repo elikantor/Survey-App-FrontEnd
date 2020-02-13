@@ -1,22 +1,25 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
 
-const NavBar = () => {
+const NavBar = (props) => {
 
     return (
-        <ul className="nav">
+      <ul className="nav">
         <li>
           <NavLink to="/">Home</NavLink>
         </li>
-        <li>
+        {!props.token ? <li>
           <NavLink to="/login">Login</NavLink>
-        </li>
-        <li>
+        </li> : null }
+        {!props.token ? <li>
           <NavLink to="/signup">Sign Up</NavLink>
-        </li>
-        {/* <li>
+        </li> : null }
+        {props.token ? <li>
           <NavLink to="/profile">Profile</NavLink>
-        </li> */}
+        </li> : null }
+        {props.token ? <li>
+          <button onClick={props.signout}>Sign Out</button>
+        </li> : null }
       </ul>
     )
 

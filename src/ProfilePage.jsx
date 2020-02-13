@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import Survey from './Survey'
-// import NewSnackForm from './NewSnackForm'
 
 class ProfilePage extends Component {
 
   render() {
-      console.log(this.props)
+    console.log(this.props)
     let {survey_creator:{surveys, username}} = this.props
 
     return (
       <div>
         <h2>{username}&apos;s Profile</h2>
-        <h3>Surveys</h3>
+        <h3>Surveys {username} Has Created</h3>
 
         <ol>
-          {surveys.map(survey => <Survey key={survey.id} survey={survey} />)}
+          {surveys.map(survey => <li onClick={()=>this.props.renderSurvey(survey)} key={survey.id}>{survey.name}</li>)}
         </ol>
 
       </div>
